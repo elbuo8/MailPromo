@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
 public class Contacts {
 
 	public Contacts() {
-		if(isEmpty())
-			readFile();
-		else
+		if(!isEmpty())
 			startContactList();
+		else
+			readFile();
 		sort();
 
 	}
@@ -111,7 +111,7 @@ public class Contacts {
 			FileWriter fw = new FileWriter("contacts.dat", false);
 			
 			for (int i = 0; i < contact.length; i++) 
-				fw.write(contact[i] + ",\n");
+				fw.write(contact[i] + "\n");
 			
 			fw.close();
 		} 

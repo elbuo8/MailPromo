@@ -1,8 +1,5 @@
 package test1;
 
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Properties;
 
@@ -11,6 +8,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Authenticator;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.NoSuchProviderException;
@@ -42,17 +40,16 @@ public class MailSender extends JComponent{
 		int selector = JOptionPane.showConfirmDialog(null, "Attachment", "Selector", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(selector == JOptionPane.YES_OPTION) {
 			final JFileChooser chooser = new JFileChooser();
-			final int retunValue = chooser.showOpenDialog(MailSender.this);
-			chooser.addActionListener(new ActionListener() {
+			chooser.setDialogTitle("Select Attachment");
+			final int retunValue = chooser.showDialog(null, "Select");
 
-				public void actionPerformed(ActionEvent e) {
-					if(retunValue == JFileChooser.APPROVE_OPTION)
-						attachment = chooser.getSelectedFile();
-				}
-			});
+			if(retunValue == JFileChooser.APPROVE_OPTION) 
+				attachment = chooser.getSelectedFile();
 		}
 		else
 			attachment = null;
+
+		System.out.println(attachment);
 		Properties mail = new Properties();
 		mail.setProperty("mail.transport.protocol", "smtp");
 		mail.setProperty("mail.smtp.host", JOptionPane.showInputDialog("Insert SMTP host"));
@@ -62,7 +59,7 @@ public class MailSender extends JComponent{
 
 		Session emailSession = Session.getDefaultInstance(mail, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(JOptionPane.showInputDialog("username"), JOptionPane.showInputDialog("password"));
+				return new PasswordAuthentication(JOptionPane.showInputDialog("Username"), JOptionPane.showInputDialog("Password"));
 			}
 		});
 
@@ -77,21 +74,25 @@ public class MailSender extends JComponent{
 			for (int j = 0; j < recipients.length; j++) 
 				recipients[j] = new InternetAddress(contacts[j]);
 
-		    MimeBodyPart messageBodyPart = new MimeBodyPart();
-		    messageBodyPart.setText(message);
+			MimeBodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setText(message);
 
-		    Multipart multipart = new MimeMultipart();
-		    multipart.addBodyPart(messageBodyPart);
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageBodyPart);
 
-		    messageBodyPart = new MimeBodyPart();
-		    DataSource source = new FileDataSource(attachment);
-		    messageBodyPart.setDataHandler(new DataHandler(source));
-		    messageBodyPart.setFileName(attachment.getName());
-		    multipart.addBodyPart(messageBodyPart);
+			if(attachment != null) {
+				messageBodyPart = new MimeBodyPart();
+				DataSource source = new FileDataSource(attachment);
+				messageBodyPart.setDataHandler(new DataHandler(source));
+				messageBodyPart.setFileName(attachment.getName());
+				multipart.addBodyPart(messageBodyPart);
+			}
 
-		    sender.setContent(multipart);
+			sender.setContent(multipart);
+			sender.setRecipients(RecipientType.TO, recipients);
+			
+			Transport.send(sender);
 
-			transport.sendMessage(sender,recipients);
 			transport.close();
 		} catch (NoSuchProviderException e) {
 			return false;
