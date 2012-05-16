@@ -49,10 +49,14 @@ public class MailSender extends JComponent{
 		else
 			attachment = null;
 
-		System.out.println(attachment);
 		Properties mail = new Properties();
 		mail.setProperty("mail.transport.protocol", "smtp");
-		mail.setProperty("mail.smtp.host", JOptionPane.showInputDialog("Insert SMTP host"));
+		selector = JOptionPane.showConfirmDialog(null, "Gmail?", "SMTP", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if(selector == JOptionPane.YES_OPTION) 
+			mail.setProperty("mail.smtp.host", "smtp.gmail.com");
+		else
+			mail.setProperty("mail.smtp.host", JOptionPane.showInputDialog("Insert SMTP host"));
 		mail.setProperty("mail.smtp.auth", "true");
 		//Hotmail fix from Hector Franqui
 		mail.setProperty("mail.smtp.starttls.enable", "true");
@@ -90,7 +94,7 @@ public class MailSender extends JComponent{
 
 			sender.setContent(multipart);
 			sender.setRecipients(RecipientType.TO, recipients);
-			
+
 			Transport.send(sender);
 
 			transport.close();

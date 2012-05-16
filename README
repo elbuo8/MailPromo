@@ -1,0 +1,15 @@
+This is a simple way to make email advertisement. 
+
+Version 0.1
+
+Current features:
+- Local contact database
+- Add and remove contacts either in bulk or singles
+- Emails may contain HTML
+- Emails may have attachments
+- Works with SMTP servers
+
+Working:
+- Recognizing smtp servers
+- Better GUI
+- More User Friendly 
