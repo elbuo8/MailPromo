@@ -81,7 +81,7 @@ public class Contacts {
 		return -1;
 	}
 	
-	public boolean removeContact(String Email) {
+	public void removeContact(String Email) {
 		if (findContact(Email) > -1) {
 			String[] temp = new String[contact.length-1];
 			for (int i = 0; i < findContact(Email); i++) 
@@ -89,10 +89,7 @@ public class Contacts {
 			for (int i = findContact(Email); i < temp.length; i++) 
 				temp[i] = contact[i+1];
 			contact = temp;
-			return true;
 		}
-		else
-			return false;
 	}
 
 	public void addContacts(String[] newContacts) {

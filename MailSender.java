@@ -29,11 +29,9 @@ public class MailSender extends JComponent{
 	 * 
 	 */
 	private static final long serialVersionUID = 42198199007655394L;
-	public MailSender() {
 
-	}
 
-	public boolean sendMessage(String[] contacts) {
+	static public boolean sendMessage(String[] contacts) {
 		String subject = JOptionPane.showInputDialog("Insert subject");
 		String message = JOptionPane.showInputDialog("Insert HTML/text");
 
@@ -106,5 +104,5 @@ public class MailSender extends JComponent{
 
 		return true;
 	}
-	private File attachment;
+	private static File attachment;
 }
