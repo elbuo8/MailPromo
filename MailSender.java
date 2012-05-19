@@ -23,6 +23,11 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Class which manages sending mails
+ * @author yamilasusta
+ *
+ */
 public class MailSender extends JComponent{
 
 	/**
@@ -31,6 +36,11 @@ public class MailSender extends JComponent{
 	private static final long serialVersionUID = 42198199007655394L;
 
 
+	/**
+	 * Sends emails to the contacts provided
+	 * @param contacts List of contacts
+	 * @return If sending was successful 
+	 */
 	static public boolean sendMessage(String[] contacts) {
 		String subject = JOptionPane.showInputDialog("Insert subject");
 		String message = JOptionPane.showInputDialog("Insert HTML/text");

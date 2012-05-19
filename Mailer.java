@@ -1,7 +1,12 @@
 package test1;
 
 import javax.swing.JOptionPane;
-
+/**
+ * Main GUI
+ * Still working on this
+ * @author yamilasusta
+ *
+ */
 public class Mailer {
 
 	/**

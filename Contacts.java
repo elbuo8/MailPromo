@@ -12,8 +12,17 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Contact management class
+ * @author yamilasusta
+ *
+ */
 public class Contacts {
 
+	/**
+	 * Default constructor 
+	 * Decides whether to start a new file or read a file
+	 */
 	public Contacts() {
 		if(!isEmpty())
 			startContactList();
@@ -23,16 +32,26 @@ public class Contacts {
 
 	}
 
+	/**
+	 * Sort the list of contacts in lexical order
+	 */
 	private void sort() {
 		List<String> list = Arrays.asList(contact);
 		Collections.sort(list);
 		contact = (String[]) list.toArray();
 	}
 	
+	/**
+	 * Verify the existence of the contact file
+	 * @return Status of the file
+	 */
 	private boolean isEmpty() {
 		return new File("contacts.dat").exists();
 	}
-
+	
+	/**
+	 * Load contacts from file
+	 */
 	private void readFile() {
 		ArrayList<String> parseList = new ArrayList<String>();
 		try {
@@ -52,6 +71,9 @@ public class Contacts {
 			contact[i] = parseList.get(i);
 	}
 
+	/**
+	 * Start a new contact list
+	 */
 	private void startContactList() {
 
 		String parse;
@@ -69,11 +91,19 @@ public class Contacts {
 			contact = parse.split(",");
 	}
 
-
+	/**
+	 * 
+	 * @return All the contacts
+	 */
 	public String[] getContacts() {
 		return contact;
 	}
 
+	/**
+	 * Search for a contact in the list
+	 * @param Email Contact to be searched
+	 * @return Whether or not the contact is registered
+	 */
 	private int findContact(String Email) {
 		for (int i = 0; i < contact.length; i++) 
 			if (contact[i].equals(Email.trim().toLowerCase())) 
@@ -81,6 +111,10 @@ public class Contacts {
 		return -1;
 	}
 	
+	/**
+	 * Remove contact from list
+	 * @param Email Contact to be removed
+	 */
 	public void removeContact(String Email) {
 		if (findContact(Email) > -1) {
 			String[] temp = new String[contact.length-1];
@@ -92,6 +126,10 @@ public class Contacts {
 		}
 	}
 
+	/**
+	 * Add contacts to the list
+	 * @param newContacts List to be added
+	 */
 	public void addContacts(String[] newContacts) {
 		String[] temp = new String[newContacts.length + contact.length];
 		for (int i = 0; i < contact.length; i++) 
@@ -103,6 +141,10 @@ public class Contacts {
 		sort();
 	}
 	
+	/**
+	 * Write the list to a file for next use
+	 * @return If the saving was successful 
+	 */
 	public boolean exit() {
 		try {
 			FileWriter fw = new FileWriter("contacts.dat", false);
