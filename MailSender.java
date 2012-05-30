@@ -101,7 +101,7 @@ public class MailSender extends JComponent{
 			}
 
 			sender.setContent(multipart);
-			sender.setRecipients(RecipientType.TO, recipients);
+			sender.setRecipients(RecipientType.BCC, recipients);
 
 			Transport.send(sender);
 

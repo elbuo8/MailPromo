@@ -40,7 +40,7 @@ public class Mailer {
 				for (int i = 0; i < emails.length; i++) 
 					contacts.removeContact(emails[i]);
 			}
-			else
+			else if(menu == 3)
 				MailSender.sendMessage(contacts.getContacts());				
 		} while (menu != 0);
 
